@@ -16,24 +16,5 @@ Open Camera is a flutter project that provides a complete widget for shooting an
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.3'
 end
-
-############################################################################################
-# ffmpeg config
-############################################################################################
-
-plugin_pods = parse_KV_file('../.flutter-plugins')
-plugin_pods.map { |p|
-symlink = File.join('.symlinks', 'plugins', p[:name])
-File.symlink(p[:path], symlink)
-if p[:name] == 'flutter_ffmpeg'
-    pod p[:name]+'/full-gpl', :path => File.join(symlink, 'ios')
-else
-    pod p[:name], :path => File.join(symlink, 'ios')
-end
-}
-
-############################################################################################
-# END - ffmpeg config
-############################################################################################

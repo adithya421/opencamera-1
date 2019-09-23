@@ -51,9 +51,11 @@ packages:
   flutter_ffmpeg:
     dependency: "direct main"
     description:
-      name: flutter_ffmpeg
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "995b2abffe4fef1f1fe121785c0657ebbf85fd2e"
+      url: "https://github.com/openponce/flutter-ffmpeg.git"
+    source: git
     version: "0.2.7"
   flutter_image_compress:
     dependency: "direct main"
