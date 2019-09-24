@@ -539,44 +539,41 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     return turns;
   }
 
+
   //
   Widget _timeWidget(String timeRecord) {
     try {
       return _initRecord
-          ? Padding(
-              padding: EdgeInsets.all(10),
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
+          ? Center(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.black12,
+          ),
+          padding: EdgeInsets.all(6),
+          child: SingleChildScrollView(
+            child: Center(
+              child: SizedBox(
+                width: 100,
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.fiber_manual_record,
+                      color: Colors.red,
                     ),
-                  ),
-                  padding: EdgeInsets.all(6),
-                  child: SizedBox(
-                    width: 80,
-                    child: Center(
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.fiber_manual_record,
-                            color: Colors.red,
-                          ),
-                          Text(
-                            timeRecord,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      timeRecord,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            )
+            ),
+          ),
+        ),
+      )
           : Container();
     } catch (_) {
       rethrow;
