@@ -60,10 +60,20 @@ Future<File> openCamera(
     var permissionPhotos =
         await PermissionHandler().checkPermissionStatus(PermissionGroup.photos);
     //
-    if (permissionCamera == PermissionStatus.granted &&
-        permissionMicrophone == PermissionStatus.granted &&
-        permissionStorage == PermissionStatus.granted &&
-        permissionPhotos == PermissionStatus.granted) {
+    bool hasPermission = false;
+    //
+    if (Platform.isAndroid) {
+      hasPermission = (permissionCamera == PermissionStatus.granted &&
+          permissionMicrophone == PermissionStatus.granted &&
+          permissionStorage == PermissionStatus.granted &&
+          permissionPhotos == PermissionStatus.granted);
+    } else if (Platform.isIOS) {
+      hasPermission = (permissionCamera == PermissionStatus.granted &&
+          permissionMicrophone == PermissionStatus.granted &&
+          permissionPhotos == PermissionStatus.granted);
+    }
+    //
+    if (hasPermission) {
       //
       final resultCamera = await Navigator.push(
         buildContext,
@@ -111,6 +121,7 @@ class OpenCamera extends StatefulWidget {
 class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
   final MethodChannel _channel = const MethodChannel('open_camera');
+
   //
   Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
