@@ -265,7 +265,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
       return null;
     }
     //
-    final Directory dirApp = await getExternalStorageDirectory();
+    final Directory dirApp = await getApplicationDocumentsDirectory();
     //
     final String dirPathApp = this.cameraMode == CameraMode.Photo
         ? '${dirApp.path}/photos'
@@ -617,6 +617,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
 
   //
   Future _photoButtonPressed(BuildContext context) async {
+    //
     _fileLocation = await _takeCamera();
     //
     String fileLocation = await Navigator.push(
