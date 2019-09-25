@@ -6,12 +6,9 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bcd298e9-3cc3-473a-bbec-e1481e63633c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+    <list default="true" id="bcd298e9-3cc3-473a-bbec-e1481e63633c" name="Default Changelist" comment="Ajustes no sistema de orientação...">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/open_camera_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/open_camera_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
@@ -28,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/src/open_camera_widget.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="148">
-              <caret line="217" column="13" lean-forward="true" selection-start-line="217" selection-start-column="13" selection-end-line="217" selection-end-column="13" />
+              <caret line="217" column="13" selection-start-line="217" selection-start-column="13" selection-end-line="217" selection-end-column="13" />
               <folding>
                 <element signature="e#1138#2925#0" />
                 <element signature="e#2536#2794#0" />
@@ -177,11 +174,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pubspec.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="26" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+            <state relative-caret-position="66">
+              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -230,7 +227,7 @@
         <entry file="file://$PROJECT_DIR$/lib/open_camera.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="66">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -267,8 +264,8 @@
         <option value="$PROJECT_DIR$/lib/src/preview_video.dart" />
         <option value="$PROJECT_DIR$/android/build.gradle" />
         <option value="$PROJECT_DIR$/ios/open_camera.podspec" />
-        <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/src/open_camera_widget.dart" />
+        <option value="$PROJECT_DIR$/pubspec.yaml" />
       </list>
     </option>
   </component>
@@ -304,6 +301,7 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../flutter-ffmpeg" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -348,7 +346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569329177710</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ajustes no sistema de orientação...">
+      <created>1569419326914</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1569419326914</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -362,6 +367,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15991472" />
       <window_info id="Captures" order="1" side_tool="true" />
@@ -373,7 +379,7 @@
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.3290461" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" visible="true" weight="0.3290461" />
+      <window_info anchor="bottom" id="Run" order="1" weight="0.3290461" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.3290461" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Logcat" order="4" />
@@ -383,7 +389,7 @@
       <window_info anchor="bottom" id="Flutter Performance" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Find" order="10" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3290461" />
+      <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.3290461" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
@@ -395,7 +401,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Foi criado um novo branch do plugin flutter_ffmpeg para diminuir a quantidade de passos necessários para a utilização do OpenCamera." />
     <MESSAGE value="Ajustes no sistema de permissão..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajustes no sistema de permissão..." />
+    <MESSAGE value="Ajustes no sistema de orientação..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajustes no sistema de orientação..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -554,7 +561,7 @@
     <entry file="file://$PROJECT_DIR$/lib/src/open_camera_widget.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
-          <caret line="217" column="13" lean-forward="true" selection-start-line="217" selection-start-column="13" selection-end-line="217" selection-end-column="13" />
+          <caret line="217" column="13" selection-start-line="217" selection-start-column="13" selection-end-line="217" selection-end-column="13" />
           <folding>
             <element signature="e#1138#2925#0" />
             <element signature="e#2536#2794#0" />
@@ -690,13 +697,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="26" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/src/flutter/bin/cache/pkg/sky_engine/lib/io/platform.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1430">
@@ -734,7 +734,14 @@
     <entry file="file://$PROJECT_DIR$/lib/open_camera.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
         </state>
       </provider>
     </entry>
