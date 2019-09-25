@@ -676,7 +676,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     //
     await controller.stopVideoRecording();
     //
-    _fileLocation = await _ajustVideos(_fileLocation, context);
+    _fileLocation = await _adjustVideoOrientation(_fileLocation, context);
     //
     final result = await Navigator.push(
       context,
@@ -696,7 +696,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   }
 
   //
-  Future<String> _ajustVideos(
+  Future<String> _adjustVideoOrientation(
       String videoLocation, BuildContext context) async {
     try {
       //
@@ -706,10 +706,18 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
       int turns;
       switch (orientation) {
         case NativeDeviceOrientation.landscapeLeft:
-          turns = 2;
+          if (Platform.isIOS) {
+            turns = 2;
+          } else {
+            turns = 0;
+          }
           break;
         case NativeDeviceOrientation.landscapeRight:
-          turns = 1;
+          if (Platform.isIOS) {
+            turns = 1;
+          } else {
+            turns = 4;
+          }
           break;
         case NativeDeviceOrientation.portraitDown:
           turns = 0;
