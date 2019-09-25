@@ -205,47 +205,49 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
       return Container();
     }
     //
-    return NativeDeviceOrientationReader(
-      builder: (BuildContext context) {
-        //
-        final orientation = NativeDeviceOrientationReader.orientation(context);
-        //
-        final _deviceOrientationExist = this
-                .cameraSettings
-                ?.deviceOrientation
-                ?.firstWhere(
-                    (deviceOrientation) => deviceOrientation == orientation)
-                ?.index ??
-            -1;
-        //
-        bool _wrongOrientation = (this.cameraSettings.forceDeviceOrientation &&
-            _deviceOrientationExist > -1);
-        //
-        if (_wrongOrientation) {
-          return FutureBuilder<Widget>(
-            future: _invalidOrientation(),
-            builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return snapshot.data;
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          );
-        }
+    return Scaffold(
+      body: NativeDeviceOrientationReader(
+        builder: (BuildContext context) {
+          //
+          final orientation = NativeDeviceOrientationReader.orientation(context);
+          //
+          final _deviceOrientationExist = this
+              .cameraSettings
+              ?.deviceOrientation
+              ?.firstWhere(
+                  (deviceOrientation) => deviceOrientation == orientation)
+              ?.index ??
+              -1;
+          //
+          bool _wrongOrientation = (this.cameraSettings.forceDeviceOrientation &&
+              _deviceOrientationExist > -1);
+          //
+          if (_wrongOrientation) {
+            return FutureBuilder<Widget>(
+              future: _invalidOrientation(),
+              builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return snapshot.data;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            );
+          }
 
-        //
-        AutoOrientation.fullAutoMode();
-        return Stack(
-          children: <Widget>[
-            _addScreen(context),
-            _addCameraTools(context),
-          ],
-        );
-      },
-      useSensor: true,
+          //
+          AutoOrientation.fullAutoMode();
+          return Stack(
+            children: <Widget>[
+              _addScreen(context),
+              _addCameraTools(context),
+            ],
+          );
+        },
+        useSensor: true,
+      ),
     );
   }
 
@@ -534,25 +536,23 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             color: Colors.black12,
           ),
           padding: EdgeInsets.all(6),
-          child: SingleChildScrollView(
-            child: Center(
-              child: SizedBox(
-                width: 100,
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.fiber_manual_record,
-                      color: Colors.red,
+          child: Center(
+            child: SizedBox(
+              width: 100,
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.fiber_manual_record,
+                    color: Colors.red,
+                  ),
+                  Text(
+                    timeRecord,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
                     ),
-                    Text(
-                      timeRecord,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
