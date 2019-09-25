@@ -6,6 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:open_camera/src/preview_photo.dart';
 import 'package:open_camera/src/preview_video.dart';
@@ -165,6 +166,8 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
   void _initCamera() {
     //
+    AutoOrientation.fullAutoMode();
+    //
     controller = CameraController(
       this.cameraSelected,
       this.cameraSettings.resolutionPreset,
@@ -197,6 +200,12 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  /*
+
+
+
+
+  * */
   //
   @override
   Widget build(BuildContext context) {
@@ -209,18 +218,20 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
       body: NativeDeviceOrientationReader(
         builder: (BuildContext context) {
           //
-          final orientation = NativeDeviceOrientationReader.orientation(context);
+          final orientation =
+              NativeDeviceOrientationReader.orientation(context);
           //
           final _deviceOrientationExist = this
-              .cameraSettings
-              ?.deviceOrientation
-              ?.firstWhere(
-                  (deviceOrientation) => deviceOrientation == orientation)
-              ?.index ??
+                  .cameraSettings
+                  ?.deviceOrientation
+                  ?.firstWhere(
+                      (deviceOrientation) => deviceOrientation == orientation)
+                  ?.index ??
               -1;
           //
-          bool _wrongOrientation = (this.cameraSettings.forceDeviceOrientation &&
-              _deviceOrientationExist > -1);
+          bool _wrongOrientation =
+              (this.cameraSettings.forceDeviceOrientation &&
+                  _deviceOrientationExist > -1);
           //
           if (_wrongOrientation) {
             return FutureBuilder<Widget>(
@@ -236,9 +247,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
               },
             );
           }
-
           //
-          AutoOrientation.fullAutoMode();
           return Stack(
             children: <Widget>[
               _addScreen(context),
@@ -525,39 +534,38 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     return turns;
   }
 
-
   //
   Widget _timeWidget(String timeRecord) {
     try {
       return _initRecord
           ? Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black12,
-          ),
-          padding: EdgeInsets.all(6),
-          child: Center(
-            child: SizedBox(
-              width: 100,
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.fiber_manual_record,
-                    color: Colors.red,
-                  ),
-                  Text(
-                    timeRecord,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                ),
+                padding: EdgeInsets.all(6),
+                child: Center(
+                  child: SizedBox(
+                    width: 100,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.fiber_manual_record,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          timeRecord,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-      )
+            )
           : Container();
     } catch (_) {
       rethrow;
@@ -589,9 +597,9 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   Future _recordButtonPressed(BuildContext context) async {
     //
     if (_initRecord) {
-      _stopVideoRecording();
+      _stopVideoRecording(context);
     } else {
-      _initializeChronometer();
+      _initializeChronometer(context);
       _fileLocation = await _takeCamera();
     }
   }
@@ -614,7 +622,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   }
 
   //
-  void _initializeChronometer() {
+  void _initializeChronometer(BuildContext context) {
     //
     Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
       //
@@ -647,7 +655,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             if (this.cameraSettings.limitRecord > -1 &&
                 timer2.tick >= this.cameraSettings.limitRecord) {
               timer2.cancel();
-              _stopVideoRecording();
+              _stopVideoRecording(context);
             }
           });
         } else {
@@ -661,11 +669,14 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   }
 
   //
-  void _stopVideoRecording() async {
+  void _stopVideoRecording(BuildContext context) async {
     //
     _initRecord = false;
     _timeRecord = "00:00";
+    //
     await controller.stopVideoRecording();
+    //
+    _fileLocation = await _ajustVideos(_fileLocation, context);
     //
     final result = await Navigator.push(
       context,
@@ -682,5 +693,49 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     }
     //
     Navigator.pop(context, result);
+  }
+
+  //
+  Future<String> _ajustVideos(
+      String videoLocation, BuildContext context) async {
+    try {
+      //
+      NativeDeviceOrientation orientation =
+          NativeDeviceOrientationReader.orientation(context);
+      //
+      int turns;
+      switch (orientation) {
+        case NativeDeviceOrientation.landscapeLeft:
+          turns = 2;
+          break;
+        case NativeDeviceOrientation.landscapeRight:
+          turns = 1;
+          break;
+        case NativeDeviceOrientation.portraitDown:
+          turns = 0;
+          break;
+        default:
+          turns = 0;
+          break;
+      }
+
+      if (turns > 0) {
+        //
+        final _compressVideo = new FlutterFFmpeg();
+        //
+        String videoLocationAdjust =
+            videoLocation.replaceAll('.mp4', '_ajust.mp4');
+        //
+        await _compressVideo.execute(
+            "-y -i $videoLocation  -vf \"transpose=$turns\" $videoLocationAdjust");
+        //
+        await File(videoLocation).delete(recursive: true);
+        return videoLocationAdjust;
+      }
+      //
+      return videoLocation;
+    } catch (ex) {
+      rethrow;
+    }
   }
 }
