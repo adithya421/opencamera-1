@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -207,7 +208,6 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     return NativeDeviceOrientationReader(
       builder: (BuildContext context) {
         //
-        final size = MediaQuery.of(context).size;
         final orientation = NativeDeviceOrientationReader.orientation(context);
         //
         final _deviceOrientationExist = this
@@ -235,23 +235,14 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             },
           );
         }
+
         //
-        return Scaffold(
-          body: SizedBox(
-            height: size.height,
-            width: size.width,
-            child: SafeArea(
-              child: AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: Stack(
-                  children: <Widget>[
-                    _addScreen(context),
-                    _addCameraTools(context),
-                  ],
-                ),
-              ),
-            ),
-          ),
+        AutoOrientation.fullAutoMode();
+        return Stack(
+          children: <Widget>[
+            _addScreen(context),
+            _addCameraTools(context),
+          ],
         );
       },
       useSensor: true,
@@ -300,25 +291,23 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
   Widget _addScreen(BuildContext context) {
     //
-    final size = MediaQuery.of(context).size;
-    //
-    return Container(
-      decoration: _screenBorderDecoration(),
-      child: Stack(
-        children: <Widget>[
-          ClipRect(
-            child: Transform.scale(
-              scale: controller.value.aspectRatio / size.aspectRatio,
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: controller.value.aspectRatio,
-                  child: CameraPreview(controller),
-                ),
+    int turns = _turnsDeviceOrientation(context);
+    return RotatedBox(
+      quarterTurns: turns,
+      child: Container(
+        decoration: _screenBorderDecoration(),
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            ClipRect(
+              child: AspectRatio(
+                aspectRatio: controller.value.aspectRatio,
+                child: CameraPreview(controller),
               ),
             ),
-          ),
-          _addTimeCount(context)
-        ],
+            _addTimeCount(context)
+          ],
+        ),
       ),
     );
   }
@@ -465,38 +454,33 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
   Widget _addSwitchCamera(BuildContext context) {
     //
-    int turns = _turnsDeviceOrientation(context);
     return Expanded(
-      child: RotatedBox(
-        quarterTurns: turns,
-        child: SizedBox(
-          width: 40.0,
-          height: 40.0,
-          child: !_initRecord
-              ? FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.switch_camera,
-                    size: 30.0,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    if (this.cameraSelected.lensDirection ==
-                        CameraLensDirection.front) {
-                      this.cameraSelected = this.cameraDescription.firstWhere(
-                          (cam) =>
-                              cam.lensDirection == CameraLensDirection.back);
-                    } else {
-                      this.cameraSelected = this.cameraDescription.firstWhere(
-                          (cam) =>
-                              cam.lensDirection == CameraLensDirection.front);
-                    }
-                    //
-                    _initCamera();
-                  },
-                )
-              : Container(),
-        ),
+      child: SizedBox(
+        width: 40.0,
+        height: 40.0,
+        child: !_initRecord
+            ? FloatingActionButton(
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.switch_camera,
+                  size: 30.0,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  if (this.cameraSelected.lensDirection ==
+                      CameraLensDirection.front) {
+                    this.cameraSelected = this.cameraDescription.firstWhere(
+                        (cam) => cam.lensDirection == CameraLensDirection.back);
+                  } else {
+                    this.cameraSelected = this.cameraDescription.firstWhere(
+                        (cam) =>
+                            cam.lensDirection == CameraLensDirection.front);
+                  }
+                  //
+                  _initCamera();
+                },
+              )
+            : Container(),
       ),
     );
   }

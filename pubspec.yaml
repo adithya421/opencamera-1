@@ -15,6 +15,7 @@ dependencies:
   native_device_orientation: ^0.2.0
   flutter_image_compress: ^0.6.3
   photo_view: ^0.4.2
+  auto_orientation: ^1.0.5
   flutter_ffmpeg:
     git:
       url: https://github.com/openponce/flutter-ffmpeg.git
