@@ -62,6 +62,13 @@ class _VideoPreviewState extends State<VideoPreview> {
   }
 
   //
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  //
   void _initVideoPlayerController() {
     _controller = VideoPlayerController.file(File(this.videoLocation))
       ..initialize().then((_) {
@@ -385,12 +392,5 @@ class _VideoPreviewState extends State<VideoPreview> {
     _controller.notifyListeners();
     //
     return videoLocation;
-  }
-
-  //
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
   }
 }
