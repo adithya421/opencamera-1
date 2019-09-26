@@ -747,7 +747,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
       NativeDeviceOrientation orientation =
           NativeDeviceOrientationReader.orientation(context);
       //
-      int turns;
+      int turns = 0;
       switch (orientation) {
         case NativeDeviceOrientation.landscapeLeft:
           if (Platform.isIOS) {
