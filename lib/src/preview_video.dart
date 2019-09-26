@@ -81,15 +81,7 @@ class _VideoPreviewState extends State<VideoPreview> {
         home: Scaffold(
           backgroundColor: Colors.white12,
           body: SafeArea(
-            child: (_initFlutterFFmpeg)
-                ? _addLoading()
-                : Column(
-                    children: <Widget>[
-                      _addVideoPlayerWidget(context),
-                      _addDivider(),
-                      _addActionButtons()
-                    ],
-                  ),
+            child: (_initFlutterFFmpeg) ? _addLoading() : _addVideoPlayer(),
           ),
         ),
       );
@@ -99,7 +91,29 @@ class _VideoPreviewState extends State<VideoPreview> {
   }
 
   //
-  Widget _initVideoPlayer() {
+  Widget _addVideoPlayer() {
+    return Column(
+      children: <Widget>[
+        _addVideoComponent(context),
+        _addDivider(),
+        _addActionButtons()
+      ],
+    );
+  }
+
+  //
+  Widget _addVideoComponent(BuildContext context) {
+    return Expanded(
+      child: Center(
+        child: _controller.value.initialized
+            ? _initializeVideoComponent()
+            : _awaitVideoComponent(context),
+      ),
+    );
+  }
+
+  //
+  Widget _initializeVideoComponent() {
     return AspectRatio(
       aspectRatio: _controller.value.aspectRatio,
       child: GestureDetector(
@@ -108,7 +122,7 @@ class _VideoPreviewState extends State<VideoPreview> {
         },
         child: Stack(
           children: <Widget>[
-            _addVideoPlayer(),
+            VideoPlayer(_controller),
             _addButtonPlay(),
             _addVideoProgressIndicator(),
             _addTimeWidget(context),
@@ -119,21 +133,10 @@ class _VideoPreviewState extends State<VideoPreview> {
   }
 
   //
-  Widget _awaitVideoPlayer(BuildContext context) {
+  Widget _awaitVideoComponent(BuildContext context) {
     return Container(
       child: Center(
         child: CircularProgressIndicator(),
-      ),
-    );
-  }
-
-  //
-  Widget _addVideoPlayerWidget(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: _controller.value.initialized
-            ? _initVideoPlayer()
-            : _awaitVideoPlayer(context),
       ),
     );
   }
@@ -143,11 +146,6 @@ class _VideoPreviewState extends State<VideoPreview> {
     return Divider(
       color: Colors.transparent,
     );
-  }
-
-  //
-  Widget _addVideoPlayer() {
-    return VideoPlayer(_controller);
   }
 
   //

@@ -202,12 +202,6 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  /*
-
-
-
-
-  * */
   //
   @override
   Widget build(BuildContext context) {
@@ -305,6 +299,9 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     return filePathApp;
   }
 
+  //------------------------
+  // WIDGETS
+  //------------------------
   //
   Widget _addScreen(BuildContext context) {
     //
@@ -341,7 +338,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            _timeWidget(_timeRecord),
+            _addTimeWidget(_timeRecord),
           ],
         );
       } else {
@@ -351,7 +348,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             orientation == NativeDeviceOrientation.landscapeRight
                 ? RotatedBox(
                     quarterTurns: 3,
-                    child: _timeWidget(_timeRecord),
+                    child: _addTimeWidget(_timeRecord),
                   )
                 : Container(),
             //
@@ -363,7 +360,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             orientation == NativeDeviceOrientation.landscapeLeft
                 ? RotatedBox(
                     quarterTurns: 1,
-                    child: _timeWidget(_timeRecord),
+                    child: _addTimeWidget(_timeRecord),
                   )
                 : Container(),
           ],
@@ -503,45 +500,36 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   }
 
   //
-  Future<Widget> _invalidOrientation() async {
-    //
-    if (_initRecord) {
-      _initRecord = false;
-      await controller.stopVideoRecording();
-    }
-    //
+  Widget _addLoading() {
     return Container(
-      color: Colors.red,
+      decoration: BoxDecoration(
+        color: Colors.black,
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(),
+            _addDivider(),
+            Text(
+              _ffmpegMessage,
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   //
-  int _turnsDeviceOrientation(BuildContext context) {
-    //
-    NativeDeviceOrientation orientation =
-        NativeDeviceOrientationReader.orientation(context);
-    //
-    int turns;
-    switch (orientation) {
-      case NativeDeviceOrientation.landscapeLeft:
-        turns = -1;
-        break;
-      case NativeDeviceOrientation.landscapeRight:
-        turns = 1;
-        break;
-      case NativeDeviceOrientation.portraitDown:
-        turns = 2;
-        break;
-      default:
-        turns = 0;
-        break;
-    }
-
-    return turns;
+  Widget _addDivider() {
+    return Divider(
+      color: Colors.transparent,
+    );
   }
 
   //
-  Widget _timeWidget(String timeRecord) {
+  Widget _addTimeWidget(String timeRecord) {
     try {
       return _initRecord
           ? Center(
@@ -575,24 +563,6 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
           : Container();
     } catch (_) {
       rethrow;
-    }
-  }
-
-  //
-  String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-
-  //
-  BoxDecoration _screenBorderDecoration() {
-    if (_initRecord) {
-      return BoxDecoration(
-        border: Border.all(
-          color: Colors.red,
-          style: BorderStyle.solid,
-          width: 3,
-        ),
-      );
-    } else {
-      return BoxDecoration();
     }
   }
 
@@ -706,33 +676,64 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     Navigator.pop(context, result);
   }
 
+  //------------------------
+  // FUNCTIONS
+  //------------------------
+
   //
-  Widget _addLoading() {
+  Future<Widget> _invalidOrientation() async {
+    //
+    if (_initRecord) {
+      _initRecord = false;
+      await controller.stopVideoRecording();
+    }
+    //
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.black,
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CircularProgressIndicator(),
-            _addDivider(),
-            Text(
-              _ffmpegMessage,
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-      ),
+      color: Colors.red,
     );
   }
 
   //
-  Widget _addDivider() {
-    return Divider(
-      color: Colors.transparent,
-    );
+  int _turnsDeviceOrientation(BuildContext context) {
+    //
+    NativeDeviceOrientation orientation =
+        NativeDeviceOrientationReader.orientation(context);
+    //
+    int turns;
+    switch (orientation) {
+      case NativeDeviceOrientation.landscapeLeft:
+        turns = -1;
+        break;
+      case NativeDeviceOrientation.landscapeRight:
+        turns = 1;
+        break;
+      case NativeDeviceOrientation.portraitDown:
+        turns = 2;
+        break;
+      default:
+        turns = 0;
+        break;
+    }
+
+    return turns;
+  }
+
+  //
+  String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
+  //
+  BoxDecoration _screenBorderDecoration() {
+    if (_initRecord) {
+      return BoxDecoration(
+        border: Border.all(
+          color: Colors.red,
+          style: BorderStyle.solid,
+          width: 3,
+        ),
+      );
+    } else {
+      return BoxDecoration();
+    }
   }
 
   //
