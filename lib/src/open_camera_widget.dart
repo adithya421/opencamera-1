@@ -311,7 +311,6 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
         quarterTurns: _turnsDeviceOrientation(context),
         child: Center(
           child: Stack(
-            fit: StackFit.passthrough,
             children: <Widget>[
               Center(
                 child: ClipRect(
@@ -435,14 +434,14 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   Widget _addPhotoButton(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        width: 80.0,
-        height: 80.0,
+        width: 60.0,
+        height: 60.0,
         child: FloatingActionButton(
           heroTag: "photoButton",
           backgroundColor: Colors.white,
           child: Icon(
             Icons.camera,
-            size: 70.0,
+            size: 50.0,
             color: Colors.grey,
           ),
           onPressed: () async {
