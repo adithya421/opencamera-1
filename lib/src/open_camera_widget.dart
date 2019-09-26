@@ -122,6 +122,8 @@ class OpenCamera extends StatefulWidget {
 
 class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
+  var _ffmpegMessage = "Loading...";
+  var _initFlutterFFmpeg = false;
   final MethodChannel _channel = const MethodChannel('open_camera');
 
   //
@@ -248,11 +250,15 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             );
           }
           //
-          return Stack(
-            children: <Widget>[
-              _addScreen(context),
-              _addCameraTools(context),
-            ],
+          return SafeArea(
+            child: (_initFlutterFFmpeg)
+                ? _addLoading()
+                : Stack(
+                    children: <Widget>[
+                      _addScreen(context),
+                      _addCameraTools(context),
+                    ],
+                  ),
           );
         },
         useSensor: true,
@@ -378,9 +384,9 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
         opacity: 1,
         child: Container(
           width: size.width,
-          height: 130.0,
+          height: 80.0,
           decoration: BoxDecoration(
-            color: Colors.black45,
+            color: Colors.black54,
           ),
           child: Row(
             children: <Widget>[
@@ -407,14 +413,14 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   Widget _addRecordButton(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        width: 80.0,
-        height: 80.0,
+        width: 60.0,
+        height: 60.0,
         child: FloatingActionButton(
           heroTag: "recordButton",
           backgroundColor: Colors.white,
           child: Icon(
             _initRecord ? Icons.stop : Icons.fiber_manual_record,
-            size: 70.0,
+            size: 50.0,
             color: Colors.grey,
           ),
           onPressed: () async {
@@ -678,6 +684,11 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
     //
     _fileLocation = await _adjustVideoOrientation(_fileLocation, context);
     //
+    setState(() {
+      _ffmpegMessage = "";
+      _initFlutterFFmpeg = false;
+    });
+    //
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -696,10 +707,43 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   }
 
   //
+  Widget _addLoading() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black,
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(),
+            _addDivider(),
+            Text(
+              _ffmpegMessage,
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //
+  Widget _addDivider() {
+    return Divider(
+      color: Colors.transparent,
+    );
+  }
+
+  //
   Future<String> _adjustVideoOrientation(
       String videoLocation, BuildContext context) async {
     try {
       //
+      setState(() {
+        _ffmpegMessage = "Processing...";
+        _initFlutterFFmpeg = true;
+      });
       NativeDeviceOrientation orientation =
           NativeDeviceOrientationReader.orientation(context);
       //
@@ -735,7 +779,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             videoLocation.replaceAll('.mp4', '_ajust.mp4');
         //
         await _compressVideo.execute(
-            "-y -i $videoLocation  -vf \"transpose=$turns\" $videoLocationAdjust");
+            "-y -i $videoLocation -preset veryfast -vf \"transpose=$turns\" $videoLocationAdjust");
         //
         await File(videoLocation).delete(recursive: true);
         return videoLocationAdjust;

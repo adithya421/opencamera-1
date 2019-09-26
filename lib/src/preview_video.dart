@@ -82,21 +82,7 @@ class _VideoPreviewState extends State<VideoPreview> {
           backgroundColor: Colors.white12,
           body: SafeArea(
             child: (_initFlutterFFmpeg)
-                ? Container(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                          _addDivider(),
-                          Text(
-                            _ffmpegMessage,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
+                ? _addLoading()
                 : Column(
                     children: <Widget>[
                       _addVideoPlayerWidget(context),
@@ -312,6 +298,25 @@ class _VideoPreviewState extends State<VideoPreview> {
     } catch (_) {
       rethrow;
     }
+  }
+
+  //
+  Widget _addLoading() {
+    return Container(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(),
+            _addDivider(),
+            Text(
+              _ffmpegMessage,
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   //
