@@ -305,22 +305,25 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
   Widget _addScreen(BuildContext context) {
     //
-    int turns = _turnsDeviceOrientation(context);
-    return RotatedBox(
-      quarterTurns: turns,
-      child: Container(
-        decoration: _screenBorderDecoration(),
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            ClipRect(
-              child: AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: CameraPreview(controller),
+    return Container(
+      decoration: _screenBorderDecoration(),
+      child: RotatedBox(
+        quarterTurns: _turnsDeviceOrientation(context),
+        child: Center(
+          child: Stack(
+            fit: StackFit.passthrough,
+            children: <Widget>[
+              Center(
+                child: ClipRect(
+                  child: AspectRatio(
+                    aspectRatio: controller.value.aspectRatio,
+                    child: CameraPreview(controller),
+                  ),
+                ),
               ),
-            ),
-            _addTimeCount(context)
-          ],
+              _addTimeCount(context)
+            ],
+          ),
         ),
       ),
     );
@@ -383,7 +386,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
           width: size.width,
           height: 80.0,
           decoration: BoxDecoration(
-            color: Colors.black54,
+            color: Colors.black12,
           ),
           child: Row(
             children: <Widget>[
@@ -725,6 +728,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   BoxDecoration _screenBorderDecoration() {
     if (_initRecord) {
       return BoxDecoration(
+        color: Colors.black,
         border: Border.all(
           color: Colors.red,
           style: BorderStyle.solid,
@@ -732,7 +736,9 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
         ),
       );
     } else {
-      return BoxDecoration();
+      return BoxDecoration(
+        color: Colors.black,
+      );
     }
   }
 
@@ -780,7 +786,7 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
             videoLocation.replaceAll('.mp4', '_ajust.mp4');
         //
         await _compressVideo.execute(
-            "-y -i $videoLocation -preset veryfast -vf \"transpose=$turns\" $videoLocationAdjust");
+            "-y -i $videoLocation -preset ultrafast -vf \"transpose=$turns\" $videoLocationAdjust");
         //
         await File(videoLocation).delete(recursive: true);
         return videoLocationAdjust;
