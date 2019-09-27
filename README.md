@@ -3,37 +3,36 @@
      
 ## Comece a usar 
 É muito fácil utilizar o plugin o **Open Camera** em seu projeto, ele foi pensado para ser assim ;)
-`Para sistemas **Android** a versão mínima do SDK é 24 e **IOS** versão mínima é 9.3.`
+
+`Para sistemas Android a versão mínima do SDK é 24 e IOS versão mínima é 9.3.`
+
 ## Instalação 
 A instalação do plugin na sua aplicação é muito simples, adicione no seu arquivo **pubspec.yaml** a referência do plugin **OpenCamera**.  
 ```
 dependencies:
-    open_camera:    
-        git: 
-            url: 'https://github.com/openponce/opencamera.git'    
-    flutter:    
-        sdk: flutter  
+  open_camera:    
+    git:
+      url: 'https://github.com/openponce/opencamera.git'    
+  flutter:    
+    sdk: flutter  
 ```
     
 ## Android  
 No arquivo **AndroidManifest.xml** adicione as seguintes permissões.  
 ```  
-<uses-permission android:name="android.permission.INTERNET" /> <uses-permission    
-  android:name="android.permission.CAMERA"    
-android:required="true" /> <uses-permission    
-  android:name="android.permission.RECORD_AUDIO"    
-android:required="true" /> <uses-permission    
-  android:name="android.permission.READ_EXTERNAL_STORAGE"    
-android:required="true" /> <uses-permission    
-  android:name="android.permission.WRITE_EXTERNAL_STORAGE"    
-  android:required="true" />  
+<uses-permission android:name="android.permission.INTERNET" /> 
+<uses-permission android:name="android.permission.CAMERA" android:required="true" /> 
+<uses-permission android:name="android.permission.RECORD_AUDIO" android:required="true" /> 
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:required="true" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="true" />  
 ```  
 ##  IOS  
 No IOS é necessário editar os seguintes arquivos.  
   
 **Arquivo PodFile**  
 Altere a linha removendo o comentário e trocando a versão miníma no arquivo PodFile.
-`O arquivo está na pasta **ios/PodFile** do seu projeto. ` 
+
+`O arquivo está na pasta ios/PodFile do seu projeto. ` 
 
 ```  
 platform :ios, '9.3'  
@@ -41,7 +40,8 @@ platform :ios, '9.3'
   
 **Arquivo Info.plist**  
 No arquivo **Info.plist** adicione as seguintes pemissões.  
-O arquivo está em **ios/Runner/Info.plist** no seu projeto.  
+
+`O arquivo está em ios/Runner/Info.plist no seu projeto.`
   
 ```
 <key>NSCameraUsageDescription</key>
