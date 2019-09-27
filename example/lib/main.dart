@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Take Photo",
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(),
         body: FutureBuilder<List<CameraDescription>>(
@@ -57,7 +58,7 @@ class _HomeState extends State<Home> {
                               fileName = file?.path ?? "";
                             });
                           },
-                          child: Text("Fotografar"),
+                          child: Text("Take Photo"),
                         ),
                       ),
                       Container(
@@ -70,13 +71,14 @@ class _HomeState extends State<Home> {
                               cameraSettings: CameraSettings(
                                 limitRecord: 15,
                                 useCompression: true,
+                                resolutionPreset: ResolutionPreset.ultraHigh,
                               ),
                             );
                             setState(() {
                               fileName = file?.path ?? "";
                             });
                           },
-                          child: Text("Filmar"),
+                          child: Text("Video Recording"),
                         ),
                       ),
                     ],

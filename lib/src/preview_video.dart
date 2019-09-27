@@ -85,6 +85,7 @@ class _VideoPreviewState extends State<VideoPreview> {
     try {
       return MaterialApp(
         title: 'Video Preview',
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           backgroundColor: Colors.white12,
           body: SafeArea(

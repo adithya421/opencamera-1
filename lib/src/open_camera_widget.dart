@@ -5,7 +5,6 @@ import 'package:auto_orientation/auto_orientation.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:open_camera/src/preview_photo.dart';
@@ -122,22 +121,13 @@ class OpenCamera extends StatefulWidget {
 
 class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
   //
+  var _initRecord = false;
+  var _timeRecord = "00:00";
   var _ffmpegMessage = "Loading...";
   var _initFlutterFFmpeg = false;
-  final MethodChannel _channel = const MethodChannel('open_camera');
 
   //
-  Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
-  //
-  bool _initRecord = false;
-  String _timeRecord = "00:00";
   String _fileLocation;
-
-  //
   CameraController controller;
   CameraDescription cameraSelected;
 
@@ -419,8 +409,8 @@ class _OpenCameraState extends State<OpenCamera> with WidgetsBindingObserver {
           backgroundColor: Colors.white,
           child: Icon(
             _initRecord ? Icons.stop : Icons.fiber_manual_record,
+            color: Colors.red,
             size: 50.0,
-            color: Colors.grey,
           ),
           onPressed: () async {
             await _recordButtonPressed(context);

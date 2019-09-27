@@ -26,58 +26,66 @@ class _PreviewPhotoState extends State<PreviewPhoto> {
 
   //
   Widget previewPhoto(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: PhotoView(
-              imageProvider: FileImage(
-                File(this.location),
+    return MaterialApp(
+        title: 'Photo Preview',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Colors.white12,
+          body: SafeArea(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: PhotoView(
+                      imageProvider: FileImage(
+                        File(this.location),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            color: Colors.green,
+                            onPressed: () {
+                              Navigator.pop(context, this.location);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            color: Colors.red,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
               ),
             ),
           ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton(
-                    color: Colors.green,
-                    onPressed: () {
-                      Navigator.pop(context, this.location);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton(
-                    color: Colors.red,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+        ));
   }
 }
