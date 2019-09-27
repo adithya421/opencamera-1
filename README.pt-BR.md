@@ -1,42 +1,47 @@
-  
 # Open Camera    
- Open Camera é um plugin flutter, escrito em Dart, muito leve, agradável e intuitivo, que adiciona ao seu aplicativo a capacidade de tirar fotos e gravar vídeos.  
+ Open Camera é um plugin flutter, muito leve, agradável e intuitivo, que adiciona ao seu aplicativo a capacidade de tirar fotos e gravar vídeos.  
      
-## Comece a usar É muito facil utilizar o plugin o **Open Camera** em seu projeto, ele foi pensado para ser simples e de fácil implementação. Para sistemas **Android** a versão do mínima do SDK é 24 e **IOS** versão mínima é 9.3  
-## Instalação A instalação do plugin na sua aplicação é muito simples, adicione no seu arquivo **pubspec.yaml** a referência do plugin **OpenCamera**.  
-  
- dependencies:      open_camera:    
-        git:    
-          url: 'https://github.com/openponce/opencamera.git'    
-      flutter:    
-        sdk: flutter  
+### Comece a usar 
+É muito fácil utilizar o plugin o **Open Camera** em seu projeto, ele foi pensado para ser assim ;)
+
+`Para sistemas Android a versão mínima do SDK é 24 e IOS versão mínima é 9.3.`
+
+# Instalação 
+A instalação do plugin na sua aplicação é muito simples, adicione no seu arquivo **pubspec.yaml** a referência do plugin **OpenCamera**.  
+```
+dependencies:
+  open_camera:    
+    git:
+      url: 'https://github.com/openponce/opencamera.git'    
+  flutter:    
+    sdk: flutter  
+```
     
-##  Android  
+### Android  
 No arquivo **AndroidManifest.xml** adicione as seguintes permissões.  
 ```  
-<uses-permission android:name="android.permission.INTERNET" /> <uses-permission    
-  android:name="android.permission.CAMERA"    
-android:required="true" /> <uses-permission    
-  android:name="android.permission.RECORD_AUDIO"    
-android:required="true" /> <uses-permission    
-  android:name="android.permission.READ_EXTERNAL_STORAGE"    
-android:required="true" /> <uses-permission    
-  android:name="android.permission.WRITE_EXTERNAL_STORAGE"    
-  android:required="true" />  
+<uses-permission android:name="android.permission.INTERNET" /> 
+<uses-permission android:name="android.permission.CAMERA" android:required="true" /> 
+<uses-permission android:name="android.permission.RECORD_AUDIO" android:required="true" /> 
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:required="true" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:required="true" />  
 ```  
-##  IOS  
+###  IOS  
 No IOS é necessário editar os seguintes arquivos.  
   
 **Arquivo PodFile**  
-Altere o seguinte cometário no arquivo PodFile, o arquivo está na pasta **ios/PodFile** do seu projeto.  
+Altere a linha removendo o comentário e trocando a versão miníma no arquivo PodFile.
+
+`O arquivo está na pasta ios/PodFile do seu projeto. ` 
+
 ```  
 platform :ios, '9.3'  
 ```  
-*A versão miníma da plataforma é 9.3*  
   
 **Arquivo Info.plist**  
 No arquivo **Info.plist** adicione as seguintes pemissões.  
-O arquivo está em **ios/Runner/Info.plist** no seu projeto.  
+
+`O arquivo está em ios/Runner/Info.plist no seu projeto.`
   
 ```
 <key>NSCameraUsageDescription</key>
@@ -49,8 +54,68 @@ O arquivo está em **ios/Runner/Info.plist** no seu projeto.
 <string>Camera App would like to access your photo gallery for uploading images to the app</string>    
 <key>NSAppTransportSecurity</key>    
 <dict>    
-	 <key>NSAllowsArbitraryLoads</key>    
-	 <true/>    
+   <key>NSAllowsArbitraryLoads</key>    
+   <true/>    
 </dict>
 ```
-    
+# Como usar    
+
+### Configurações
+
+Configure de acordo com a necessidade ;)
+
+```
+var settings = CameraSettings(
+  limitRecord: 15,
+  useCompression: true,
+  resolutionPreset: ResolutionPreset.ultraHigh,
+  forceDeviceOrientation: true,
+  deviceOrientation: [
+    NativeDeviceOrientation.landscapeLeft,
+    NativeDeviceOrientation.landscapeRight,
+  ],
+);
+
+```
+
+|Parâmetro| Tipo |Descrição|
+|--|--|--|
+|limitRecord| int |Tempo limite de gravação em segundos.|
+|useCompression|bool|Se o plugin deve comprimir a foto ou vídeo antes de retornar|
+|resolutionPreset|enum|Qualidade de resolução da câmera|
+|forceDeviceOrientation|bool|Se o plugin deve restringir a orientação da câmera|
+|deviceOrientation|array|Define quais orientações de câmera são permitidas pelo plugin|
+
+### Tirando uma foto
+```
+File file = await openCamera(
+  context,
+  CameraMode.Photo,
+  cameraSettings: CameraSettings(
+    useCompression: true,
+    resolutionPreset: ResolutionPreset.ultraHigh,
+  ),
+);
+
+```
+### Gravando um vídeo
+```
+File file = await openCamera(context,
+                             CameraMode.Video,
+                             cameraSettings: CameraSettings(
+                                limitRecord: 15,
+                                useCompression: true,
+                                resolutionPreset: ResolutionPreset.ultraHigh,
+                                forceDeviceOrientation: true,
+                                deviceOrientation: [
+                                  NativeDeviceOrientation.landscapeLeft,
+                                  NativeDeviceOrientation.landscapeRight,
+                                ],
+                              ),
+                            );
+```
+
+Autores.
+
+Diogo Luiz Ponce (dlponce@gmail.com) / Joelson Santos Cunha (contato@joecorp.com.br)
+
