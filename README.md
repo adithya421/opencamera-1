@@ -4,7 +4,7 @@
 ## Comece a usar 
 É muito facil utilizar o plugin o **Open Camera** em seu projeto, ele foi pensado para ser de fácil implementação. 
 Para sistemas **Android** a versão mínima do SDK é 24 e **IOS** versão mínima é 9.3  
-##Instalação 
+## Instalação 
 A instalação do plugin na sua aplicação é muito simples, adicione no seu arquivo **pubspec.yaml** a referência do plugin **OpenCamera**.  
   
 ```
@@ -56,8 +56,8 @@ O arquivo está em **ios/Runner/Info.plist** no seu projeto.
 <string>Camera App would like to access your photo gallery for uploading images to the app</string>    
 <key>NSAppTransportSecurity</key>    
 <dict>    
-	<key>NSAllowsArbitraryLoads</key>    
-	<true/>    
+   <key>NSAllowsArbitraryLoads</key>    
+   <true/>    
 </dict>
 ```
     
