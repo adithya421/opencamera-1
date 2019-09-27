@@ -1,7 +1,7 @@
-#Open Camera    
+# Open Camera    
  Open Camera é um plugin flutter, escrito em Dart, muito leve, agradável e intuitivo, que adiciona ao seu aplicativo a capacidade de tirar fotos e gravar vídeos.  
      
-##Comece a usar 
+## Comece a usar 
 É muito facil utilizar o plugin o **Open Camera** em seu projeto, ele foi pensado para ser de fácil implementação. 
 Para sistemas **Android** a versão mínima do SDK é 24 e **IOS** versão mínima é 9.3  
 ##Instalação 
@@ -18,7 +18,7 @@ dependencies:
 
 ```
     
-##Android  
+## Android  
 No arquivo **AndroidManifest.xml** adicione as seguintes permissões.  
 ```  
 <uses-permission android:name="android.permission.INTERNET" /> <uses-permission    
@@ -56,8 +56,8 @@ O arquivo está em **ios/Runner/Info.plist** no seu projeto.
 <string>Camera App would like to access your photo gallery for uploading images to the app</string>    
 <key>NSAppTransportSecurity</key>    
 <dict>    
-	 <key>NSAllowsArbitraryLoads</key>    
-	 <true/>    
+	<key>NSAllowsArbitraryLoads</key>    
+	<true/>    
 </dict>
 ```
     
