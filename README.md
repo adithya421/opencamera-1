@@ -3,7 +3,7 @@
      
 ## Comece a usar 
 É muito fácil utilizar o plugin o **Open Camera** em seu projeto, ele foi pensado para ser assim ;)
-Para sistemas **Android** a versão mínima do SDK é 24 e **IOS** versão mínima é 9.3  
+`Para sistemas **Android** a versão mínima do SDK é 24 e **IOS** versão mínima é 9.3.`
 ## Instalação 
 A instalação do plugin na sua aplicação é muito simples, adicione no seu arquivo **pubspec.yaml** a referência do plugin **OpenCamera**.  
 ```
@@ -32,11 +32,12 @@ android:required="true" /> <uses-permission
 No IOS é necessário editar os seguintes arquivos.  
   
 **Arquivo PodFile**  
-Altere o seguinte cometário no arquivo PodFile, o arquivo está na pasta **ios/PodFile** do seu projeto.  
+Altere a linha removendo o comentário e trocando a versão miníma no arquivo PodFile.
+`O arquivo está na pasta **ios/PodFile** do seu projeto. ` 
+
 ```  
 platform :ios, '9.3'  
 ```  
-*A versão miníma da plataforma é 9.3*  
   
 **Arquivo Info.plist**  
 No arquivo **Info.plist** adicione as seguintes pemissões.  
